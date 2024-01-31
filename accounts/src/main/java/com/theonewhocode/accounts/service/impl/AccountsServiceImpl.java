@@ -1,10 +1,13 @@
 package com.theonewhocode.accounts.service.impl;
 
 import com.theonewhocode.accounts.constants.AccountsConstants;
+import com.theonewhocode.accounts.dto.AccountsDto;
 import com.theonewhocode.accounts.dto.CustomerDto;
 import com.theonewhocode.accounts.entity.Accounts;
 import com.theonewhocode.accounts.entity.Customer;
 import com.theonewhocode.accounts.exception.CustomerAlreadyExistsException;
+import com.theonewhocode.accounts.exception.ResourceNotFoundException;
+import com.theonewhocode.accounts.mapper.AccountsMapper;
 import com.theonewhocode.accounts.mapper.CustomerMapper;
 import com.theonewhocode.accounts.repository.AccountsRepository;
 import com.theonewhocode.accounts.repository.CustomerRepository;
@@ -44,7 +47,6 @@ public class AccountsServiceImpl implements IAccountsService {
     }
 
     /**
-     *
      * @param customer - Customer Object
      * @return
      */
@@ -60,5 +62,23 @@ public class AccountsServiceImpl implements IAccountsService {
         newAccount.setCreatedBy("Anonymous");
 
         return newAccount;
+    }
+
+    /**
+     * @param mobileNumber - Input Mobile Number
+     * @return Accounts Details based on a given mobileNumber
+     */
+    @Override
+    public CustomerDto fetchAccount(String mobileNumber) {
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
+
+        Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId())
+                .orElseThrow(() -> new ResourceNotFoundException("Account", "customerId", customer.getCustomerId().toString()));
+
+        CustomerDto customerDto = CustomerMapper.mapToCustomerDto(customer, new CustomerDto());
+        customerDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
+
+        return customerDto;
     }
 }
