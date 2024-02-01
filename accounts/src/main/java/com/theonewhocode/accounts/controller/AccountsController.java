@@ -22,7 +22,7 @@ public class AccountsController {
     private IAccountsService accountsService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createAccount(@Valid @RequestBody CustomerDto customerDto) {
+    public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
         accountsService.createAccount(customerDto);
 
         return ResponseEntity
@@ -31,7 +31,7 @@ public class AccountsController {
     }
 
     @GetMapping("/fetch")
-    public ResponseEntity<?> fetchAccountDetails(@RequestParam
+    public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam
                                                  @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits.")
                                                  String mobileNumber) {
         CustomerDto customerDto = accountsService.fetchAccount(mobileNumber);
@@ -41,7 +41,7 @@ public class AccountsController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateAccountDetails(@Valid @RequestBody CustomerDto customerDto) {
+    public ResponseEntity<ResponseDto> updateAccountDetails(@Valid @RequestBody CustomerDto customerDto) {
         boolean isUpdated = accountsService.updateAccount(customerDto);
 
         if (isUpdated) {
@@ -56,7 +56,7 @@ public class AccountsController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteAccountDetails(@RequestParam
+    public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam
                                                   @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits.")
                                                   String mobileNumber) {
         boolean isDeleted = accountsService.deleteAccount(mobileNumber);
