@@ -1,5 +1,8 @@
 package com.theonewhocode.loans.dto;
 
+import lombok.Data;
+
+@Data
 public class LoansDto {
     private String mobileNumber;
 

@@ -1,8 +1,11 @@
 package com.theonewhocode.loans.service.impl;
 
 import com.theonewhocode.loans.constants.LoansConstant;
+import com.theonewhocode.loans.dto.LoansDto;
 import com.theonewhocode.loans.entity.Loans;
 import com.theonewhocode.loans.exception.LoanAlreadyExistsException;
+import com.theonewhocode.loans.exception.ResourceNotFoundException;
+import com.theonewhocode.loans.mapper.LoansMapper;
 import com.theonewhocode.loans.repository.LoansRepository;
 import com.theonewhocode.loans.service.ILoansService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +53,45 @@ public class LoansServiceImpl implements ILoansService {
         newLoan.setCreatedBy("ANONYMOUS");
 
         return newLoan;
+    }
+
+    /**
+     * @param mobileNumber - Input mobile Number
+     * @return Loan Details based on a given mobileNumber
+     */
+    @Override
+    public LoansDto fetchLoan(String mobileNumber) {
+        Loans loans = loansRepository.findByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Loan", "mobileNumber", mobileNumber));
+
+        return LoansMapper.mapToLoansDto(loans, new LoansDto());
+    }
+
+    /**
+     * @param loansDto - LoansDto Object
+     * @return boolean indicating if the update of card details is successful or not
+     */
+    @Override
+    public boolean updateLoan(LoansDto loansDto) {
+        Loans loans = loansRepository.findByLoanNumber(loansDto.getLoanNumber())
+                .orElseThrow(() -> new ResourceNotFoundException("Loan", "loanNumber", loansDto.getLoanNumber()));
+
+        LoansMapper.mapToLoans(loansDto, loans);
+        loansRepository.save(loans);
+
+        return true;
+    }
+
+    /**
+     * @param mobileNumber - Input Mobile Number
+     * @return boolean indicating if the delete of loan details is successful or not
+     */
+    @Override
+    public boolean deleteLoan(String mobileNumber) {
+        Loans loans = loansRepository.findByMobileNumber(mobileNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Loan", "mobileNumber", mobileNumber));
+
+        loansRepository.deleteById(loans.getLoanId());
+        return true;
     }
 }
