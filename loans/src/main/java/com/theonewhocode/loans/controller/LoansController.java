@@ -4,21 +4,27 @@ import com.theonewhocode.loans.constants.LoansConstant;
 import com.theonewhocode.loans.dto.LoansDto;
 import com.theonewhocode.loans.dto.ResponseDto;
 import com.theonewhocode.loans.service.ILoansService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
+@Validated
 public class LoansController {
 
     @Autowired
     private ILoansService loansService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> createLoan(@RequestParam String mobileNumber) {
+    public ResponseEntity<ResponseDto> createLoan(@RequestParam
+                                                  @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
+                                                  String mobileNumber) {
         loansService.createLoan(mobileNumber);
 
         return ResponseEntity
@@ -27,7 +33,9 @@ public class LoansController {
     }
 
     @GetMapping("/fetch")
-    public ResponseEntity<LoansDto> fetchLoan(@RequestParam String mobileNumber) {
+    public ResponseEntity<LoansDto> fetchLoan(@RequestParam
+                                              @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
+                                              String mobileNumber) {
         LoansDto loansDto = loansService.fetchLoan(mobileNumber);
 
         return ResponseEntity
@@ -36,7 +44,7 @@ public class LoansController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ResponseDto> updateLoan(@RequestBody LoansDto loansDto) {
+    public ResponseEntity<ResponseDto> updateLoan(@RequestBody @Valid LoansDto loansDto) {
         boolean isUpdated = loansService.updateLoan(loansDto);
 
         if (isUpdated) {
@@ -51,7 +59,9 @@ public class LoansController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<ResponseDto> deleteLoan(@RequestParam String mobileNumber) {
+    public ResponseEntity<ResponseDto> deleteLoan(@RequestParam
+                                                  @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
+                                                  String mobileNumber) {
         boolean isDeleted = loansService.deleteLoan(mobileNumber);
 
         if (isDeleted) {
