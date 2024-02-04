@@ -9,12 +9,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="loans" />
         <module name="accounts" />
+        <module name="cards" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="accounts" options="-parameters" />
+      <module name="cards" options="-parameters" />
       <module name="loans" options="-parameters" />
     </option>
   </component>
