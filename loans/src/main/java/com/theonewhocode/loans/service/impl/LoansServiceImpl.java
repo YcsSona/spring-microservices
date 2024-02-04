@@ -11,7 +11,6 @@ import com.theonewhocode.loans.service.ILoansService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -49,8 +48,6 @@ public class LoansServiceImpl implements ILoansService {
         newLoan.setTotalLoan(LoansConstant.NEW_LOAN_LIMIT);
         newLoan.setAmountPaid(0);
         newLoan.setOutstandingAmount(LoansConstant.NEW_LOAN_LIMIT);
-        newLoan.setCreatedAt(LocalDateTime.now());
-        newLoan.setCreatedBy("ANONYMOUS");
 
         return newLoan;
     }
