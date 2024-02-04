@@ -1,10 +1,8 @@
 package com.theonewhocode.cards.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class CardsDto {
 
     private String mobileNumber;
