@@ -11,6 +11,26 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")
+@OpenAPIDefinition(
+        info = @Info(
+                title = "Cards microservice REST API Documentation",
+                description = "EazyBank Cards microservice REST API Documentation",
+                version = "v1",
+                contact = @Contact(
+                        name = "Sample User",
+                        email = "email@email.com",
+                        url = "https://www.google.com"
+                ),
+                license = @License(
+                        name = "Apache 2.0",
+                        url = "https://www.google.com"
+                )
+        ),
+        externalDocs = @ExternalDocumentation(
+                description = "EazyBank Cards microservice REST API Documentation",
+                url = "https://www.google.com"
+        )
+)
 public class CardsApplication {
 
     public static void main(String[] args) {
