@@ -11,7 +11,6 @@ import com.theonewhocode.cards.service.ICardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -48,9 +47,6 @@ public class CardsServiceImpl implements ICardService {
         newCard.setTotalLimit(CardsConstants.NEW_CARD_LIMIT);
         newCard.setAmountUsed(0);
         newCard.setAvailableAmount(CardsConstants.NEW_CARD_LIMIT);
-        newCard.setCreatedBy("ANONYMOUS");
-        newCard.setCreatedAt(LocalDateTime.now());
-
         return newCard;
     }
 
