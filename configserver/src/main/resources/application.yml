@@ -2,12 +2,16 @@ spring:
   application:
     name: "configserver"
   profiles:
-    active: native # when files are stored in classpath
+    active: git
   cloud:
     config:
       server:
-        native:
-          search-locations: "classpath:/config"
+        git:
+          uri: "https://github.com/YcsSona/spring-config.git"
+          default-label: main #branch name
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
 
 server:
   port: 8071
