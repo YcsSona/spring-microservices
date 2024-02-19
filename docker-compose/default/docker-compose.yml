@@ -1,9 +1,32 @@
 services:
+  rabbit:
+    image: rabbitmq:3.12-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    networks:
+      - eazybank
   configserver:
     image: "theonewhocode/configserver:s6"
     container_name: configserver-ms
     ports:
       - "8071:8071"
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s # check after every 10s
+      timeout: 5s # wait for 5s in each check to get the response
+      retries: 10
+      start_period: 10s # start after 10s
     deploy:
       resources:
         limits:
@@ -15,6 +38,9 @@ services:
     container_name: accounts-ms
     ports:
       - "8080:8080"
+    depends_on:
+      configserver:
+        condition: service_healthy
     deploy:
       resources:
         limits:
@@ -31,6 +57,9 @@ services:
     container_name: loans-ms
     ports:
       - "8090:8090"
+    depends_on:
+      configserver:
+        condition: service_healthy
     deploy:
       resources:
         limits:
@@ -47,6 +76,9 @@ services:
     container_name: cards-ms
     ports:
       - "9000:9000"
+    depends_on:
+      configserver:
+        condition: service_healthy
     deploy:
       resources:
         limits:
