@@ -54,7 +54,7 @@ services:
       service: microservice-eureka-config
 
   cards:
-    image: "theonewhocode/cards:s6"
+    image: "theonewhocode/cards:s8"
     container_name: cards-ms
     ports:
       - "9090:9090"
