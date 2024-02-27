@@ -78,7 +78,7 @@ public class AccountsController {
     )
     @ApiResponses({
             @ApiResponse(
-                    responseCode = "201",
+                    responseCode = "200",
                     description = "HTTP Status OK"
             ),
             @ApiResponse(
