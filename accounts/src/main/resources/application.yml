@@ -52,3 +52,9 @@ info:
     name: "accounts"
     description: "Eazy Bank Accounts Application"
     version: "1.0.0"
+
+logging:
+  level:
+    com:
+      theonewhocode:
+        accounts: DEBUG

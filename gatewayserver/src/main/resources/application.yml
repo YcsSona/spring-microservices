@@ -31,5 +31,4 @@ info:
 logging:
   level:
     com:
-      theonewhocode:
-        gatewayserver: DEBUG
+      theonewhocode: DEBUG
