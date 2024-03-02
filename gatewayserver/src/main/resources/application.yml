@@ -30,6 +30,9 @@ management:
   info: # enables actuator info endpoint
     env:
       enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 info:
   app:
