@@ -73,7 +73,7 @@
 				<version>3.4.0</version>
 				<configuration>
 					<to>
-						<image>theonewhocode/${project.artifactId}:s11</image>
+						<image>theonewhocode/${project.artifactId}:s12</image>
 					</to>
 				</configuration>
 			</plugin>
