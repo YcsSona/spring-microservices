@@ -99,8 +99,8 @@ services:
     volumes:
       - ../observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     extends:
-      file: common-config.yml
       service: network-deploy-service
+      file: common-config.yml
 
   tempo:
     image: grafana/tempo
@@ -108,12 +108,12 @@ services:
     command: -config.file /etc/tempo-config.yml
     ports:
       - "3110:3100"
-      - "7000:4317"
+      - "4317:4317"
     volumes:
       - ../observability/tempo/tempo.yml:/etc/tempo-config.yml
     extends:
-      file: common-config.yml
       service: network-deploy-service
+      file: common-config.yml
 
   grafana:
     image: grafana/grafana:latest
@@ -203,7 +203,7 @@ services:
     ports:
       - "3100:3100"
     healthcheck:
-      test: ["CMD", "service", "nginx", "status"]
+      test: [ "CMD", "service", "nginx", "status" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -239,6 +239,9 @@ services:
       timeout: 5s # wait for 5s in each check to get the response
       retries: 20
       start_period: 10s # start after 10s
+    depends_on:
+      configserver:
+        condition: service_healthy
     extends:
       file: common-config.yml
       service: microservice-configservice-config
@@ -255,6 +258,11 @@ services:
       timeout: 5s
       retries: 20
       start_period: 10s
+    depends_on:
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "accounts"
       OTEL_SERVICE_NAME: "accounts"
@@ -271,6 +279,11 @@ services:
       timeout: 5s
       retries: 20
       start_period: 10s
+    depends_on:
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "loans"
       OTEL_SERVICE_NAME: "loans"
@@ -287,6 +300,11 @@ services:
       timeout: 5s
       retries: 20
       start_period: 10s
+    depends_on:
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "cards"
       OTEL_SERVICE_NAME: "cards"
@@ -305,6 +323,10 @@ services:
       loans:
         condition: service_healthy
       cards:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+      eurekaserver:
         condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "gatewayserver"
