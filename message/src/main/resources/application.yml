@@ -1,0 +1,11 @@
+server:
+  port: 9010
+
+spring:
+  application:
+    name: "message"
+  cloud:
+    function:
+      # compose email and sms into single logical unit
+      definition: email|sms
+
