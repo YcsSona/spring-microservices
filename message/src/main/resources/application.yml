@@ -8,4 +8,15 @@ spring:
     function:
       # compose email and sms into single logical unit
       definition: email|sms
+    stream:
+      bindings:
+        emailsms-in-0:
+          destination: send-communication # bind to a queue
+          group: ${spring.application.name}
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    connection-timeout: 10s
 

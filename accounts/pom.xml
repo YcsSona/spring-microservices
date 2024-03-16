@@ -90,6 +90,14 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-rabbit</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -125,7 +133,7 @@
                 <version>3.4.0</version>
                 <configuration>
                     <to>
-                        <image>theonewhocode/${project.artifactId}:s12</image>
+                        <image>theonewhocode/${project.artifactId}:s13</image>
                     </to>
                 </configuration>
             </plugin>
