@@ -25,8 +25,13 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true # enables circuit breaker for all the openfeign clients
+    function:
+      definition: updateCommunication
     stream:
       bindings:
+        updateCommunication-in-0:
+          destination: communication-sent # bind to a queue
+          group: ${spring.application.name}
         sendCommunication-out-0:
           destination: send-communication # bind to an exchange
   rabbitmq:

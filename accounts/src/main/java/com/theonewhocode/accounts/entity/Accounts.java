@@ -1,8 +1,6 @@
 package com.theonewhocode.accounts.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -12,7 +10,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Accounts extends BaseEntity{
+public class Accounts extends BaseEntity {
 
     private Long customerId;
 
@@ -22,4 +20,6 @@ public class Accounts extends BaseEntity{
     private String accountType;
 
     private String branchAddress;
+
+    private Boolean communicationSw;
 }

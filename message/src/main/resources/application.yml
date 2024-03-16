@@ -13,6 +13,8 @@ spring:
         emailsms-in-0:
           destination: send-communication # bind to a queue
           group: ${spring.application.name}
+        emailsms-out-0:
+          destination: communication-sent # bind to an exchange
   rabbitmq:
     host: localhost
     port: 5672
