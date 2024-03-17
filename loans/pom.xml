@@ -119,7 +119,7 @@
 				<version>3.4.0</version>
 				<configuration>
 					<to>
-						<image>theonewhocode/${project.artifactId}:s13</image>
+						<image>theonewhocode/${project.artifactId}:s14</image>
 					</to>
 				</configuration>
 			</plugin>
