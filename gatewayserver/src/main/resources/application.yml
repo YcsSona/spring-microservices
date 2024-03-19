@@ -5,13 +5,21 @@ spring:
     import: "optional:configserver:http://localhost:8071/"
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: false # connects with the service discovery server and locate all the details about microservices
-          lowerCaseServiceId: true
+#      discovery:
+#        locator:
+#          enabled: false # connects with the service discovery server and locate all the details about microservices
+#          lowerCaseServiceId: true
       httpclient:
         connect-timeout: 1000 # time required get the connection with respective microservice from gateway server
         response-timeout: 10s # Waits to get the response from other services
+    kubernetes:
+      discovery:
+        enabled: true
+        all-namespaces: true
+    discovery:
+      client:
+        health-indicator:
+          enabled: false
   data:
     redis:
       connect-timeout: 2s

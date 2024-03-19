@@ -22,6 +22,9 @@ spring:
   config:
     import: "optional:configserver:http://localhost:8071/"
   cloud:
+    kubernetes:
+      discovery:
+        all-namespaces: true
     openfeign:
       circuitbreaker:
         enabled: true # enables circuit breaker for all the openfeign clients
@@ -66,14 +69,15 @@ endpoints:
   shutdown:
     enabled: true
 
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    fetchRegistry: true # fetch the registry details when trying to connect with other ms
-    registerWithEureka: true
-    serviceUrl:
-      defaultZone: http://localhost:8070/eureka/
+
+#eureka:
+#  instance:
+#    preferIpAddress: true
+#  client:
+#    fetchRegistry: true # fetch the registry details when trying to connect with other ms
+#    registerWithEureka: true
+#    serviceUrl:
+#      defaultZone: http://localhost:8070/eureka/
 
 info:
   app:

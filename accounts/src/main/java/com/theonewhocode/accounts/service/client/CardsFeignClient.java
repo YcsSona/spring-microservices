@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 // connects with the Eureka server at the runtime and get instance details with logical name cards
-@FeignClient(name = "cards", fallback = CardsFallback.class)
+@FeignClient(name = "cards", url = "http://cards:9000", fallback = CardsFallback.class)
 public interface CardsFeignClient {
 
     @GetMapping(value = "/api/fetch", consumes = "application/json")
